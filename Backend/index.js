@@ -1,9 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import databaseConnection from "./utils/database.js";
-import userRoute from "./routes/userRoute.js";
+import userRoute from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
-import cors from 'cors'
+import cors from 'cors';
 
 databaseConnection()
 

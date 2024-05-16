@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import Header from './Header'
-import { API_END_POINT } from '.././utils/constant'
-import { toast } from 'react-hot-toast';
+import { API_END_POINT } from '.././utils/constant.js'
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
 import axios from 'axios';
 import { setUser, setLoading } from '../redux/userSlice';
 
@@ -27,30 +26,37 @@ const Login = () => {
   const getInputData = async (e) => {
 
     e.preventDefault();
-    console.log(fullname, email, password);
-    dispatch(setLoading(true));
+
+    // console.log(fullname, email, password);
+
+    dispatch(setLoading(false));
+
     if (isLogin) {
       //login
-      const user = { email, password };
 
       try {
-        const res = await axios.post(`${API_END_POINT}`, user, {
+        const user = { email, password };
+        const res = await axios.post(`${API_END_POINT}/registor`, user, {
           headers: {
             'content-type': 'application/josn'
           },
           withCredentials: true
         })
-        console.log(res)
 
+
+        // console.log("Login ", res)
 
         if (res.data.success) {
           toast.success(res.data.message)
         }
+        
         dispatch(setUser(res.data.user))
+
         nevigate("/browse");
+
       } catch (error) {
-        console.log(error)
         toast.error(error.response.data.message);
+        // console.log(error)
       } finally {
         dispatch(setLoading(false));
 
@@ -59,26 +65,28 @@ const Login = () => {
     }
     else {
       //register
-      const user = { fullname, email, password }
-      dispatch(setLoading(true));
-
 
       try {
-        const res = await axios.post(`${API_END_POINT}`, user, {
+        const user = { fullname, email, password }
+        const res = await axios.post(`${API_END_POINT}/login`, user, {
           headers: {
             'content-type': 'application/josn'
           },
           withCredentials: true
         })
-        console.log(res);
+        console.log("Register ", res)
 
         if (res.data.success) {
+          
           toast.success(res.data.message)
         }
         setIsLogin(true)
+
       } catch (error) {
+
         console.log(error)
         toast.error(error.response.data.message);
+
       } finally {
         dispatch(setLoading(false));
 

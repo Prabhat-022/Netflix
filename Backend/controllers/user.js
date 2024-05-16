@@ -8,7 +8,7 @@ export const Login = async (req, res) => {
         const { email, password } = req.body;
         if (!email || !password) {
             return res.status(401).json({
-                message: "Invalid data",
+                message: "Invalid data from login",
                 success: false
             })
         };
@@ -32,9 +32,9 @@ export const Login = async (req, res) => {
             id: user._id
         }
 
-        const token = await jwt.sign(tokenData, "sjkeirjfdijljdfjijlfjdlfs", { expiresIn: "1d" });
+        const token = jwt.sign(tokenData, "sjkeirjfdijljdfjijlfjdlfs", { expiresIn: "1d" });
 
-        return res.status(200).cookie("token",token , { httpOnly: true }).json({
+        return res.status(200).cookie("token", token, { httpOnly: true }).json({
             message: `Welcome back ${user.fullname}`,
             success: true
         })
@@ -64,7 +64,7 @@ export const Register = async (req, res) => {
         const { fullname, email, password } = req.body;
         if (!fullname || !email || !password) {
             return res.status(401).json({
-                message: "Invalid data",
+                message: "Invalid data from register in backend",
                 success: false
             })
         }
@@ -88,8 +88,10 @@ export const Register = async (req, res) => {
             message: "Account created successfully",
             success: true
         })
+
     } catch (error) {
-        console.log(error)
+        console.log("Register Backend error", error)
+
     }
 
 }
