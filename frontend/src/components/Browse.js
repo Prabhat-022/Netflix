@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import Header from './Header'
+import React, { useEffect } from 'react';
+import Header from './Header';
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import MovieTailorcontainer from './MovieTailorcontainer'
@@ -10,11 +10,13 @@ const Browse = () => {
   const user = useSelector((store) => store.app.user)
   const nevigate = useNavigate();
 
+
   useEffect(() => {
     if (!user) {
       nevigate("/")
     }
   })
+
 
   return (
     <div>
